@@ -7,28 +7,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 1) Install pnpm via the official action
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 8        # or omit to use the version in your package.json :contentReference[oaicite:0]{index=0}
-
-      # 2) Install Node.js and enable pnpm cache
+      # 1) Install Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: 'pnpm'
-          cache-dependency-path: '**/pnpm-lock.yaml'
 
-      # 3) Now you can run pnpm commands normally
+      # 2) Install dependencies via npm
       - name: Install dependencies
-        run: pnpm install
+        run: npm ci
 
+      # 3) Run your tests
       - name: Run tests
-        run: pnpm test
+        run: npm test
 
-      #- name: Run migrations  
-      #  run: prisma migrate deploy  
+      #- name: Run migrations
+      #  run: npx prisma migrate deploy
       #  env:
       #    DATABASE_URL: ${{ secrets.DATABASE_URL }}

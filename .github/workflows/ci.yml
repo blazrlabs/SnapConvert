@@ -1,11 +1,12 @@
 name: CI
 
-# Workflow to verify Shopify app build and deployment
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 env:
   NODE_ENV: production
@@ -15,27 +16,32 @@ env:
 
 jobs:
   build:
+    name: Build and Test
     runs-on: ubuntu-latest
     environment: production
 
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20.10.0'
-        cache: 'npm'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.10.0'
+          cache: 'npm'
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Setup Database
-      run: npm run setup
+      - name: Setup Database
+        run: |
+          npx prisma generate
+          npx prisma migrate deploy
 
-    - name: Build
-      run: npm run build
-      env:
-        SHOPIFY_API_KEY: ${{ env.SHOPIFY_API_KEY }}
-        SHOPIFY_APP_URL: ${{ env.SHOPIFY_APP_URL }}
-        SHOPIFY_API_SECRET: ${{ secrets.SHOPIFY_API_SECRET }} 
+      - name: Build
+        run: npm run build
+        env:
+          SHOPIFY_API_KEY: ${{ env.SHOPIFY_API_KEY }}
+          SHOPIFY_APP_URL: ${{ env.SHOPIFY_APP_URL }}
+          SHOPIFY_API_SECRET: ${{ secrets.SHOPIFY_API_SECRET }}
+          DATABASE_URL: ${{ env.DATABASE_URL }}

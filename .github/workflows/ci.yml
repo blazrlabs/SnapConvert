@@ -9,36 +9,44 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 env:
   NODE_ENV: production
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
-  SHOPIFY_API_KEY: ${{ secrets.SHOPIFY_API_KEY }}
-  SHOPIFY_API_SECRET: ${{ secrets.SHOPIFY_API_SECRET }}
-  SHOPIFY_APP_URL: ${{ secrets.SHOPIFY_APP_URL }}
 
 jobs:
   build:
+    name: Build and Test
     runs-on: ubuntu-latest
-    environment: production
+    environment:
+      name: production
+      url: ${{ vars.SHOPIFY_APP_URL }}
+
+    env:
+      SHOPIFY_API_KEY: ${{ secrets.SHOPIFY_API_KEY }}
+      SHOPIFY_API_SECRET: ${{ secrets.SHOPIFY_API_SECRET }}
+      SHOPIFY_APP_URL: ${{ secrets.SHOPIFY_APP_URL }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20.10.0'
-        cache: 'npm'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.10.0'
+          cache: 'npm'
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Generate Prisma Client
-      run: npx prisma generate
+      - name: Generate Prisma Client
+        run: npx prisma generate
 
-    - name: Run database migrations
-      run: npx prisma migrate deploy
+      - name: Run database migrations
+        run: npx prisma migrate deploy
 
-    - name: Build
-      run: npm run build 
+      - name: Build
+        run: npm run build 

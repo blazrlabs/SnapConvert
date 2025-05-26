@@ -7,16 +7,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      # 1) Install pnpm via the official action
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8        # or omit to use the version in your package.json :contentReference[oaicite:0]{index=0}
+
+      # 2) Install Node.js and enable pnpm cache
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: 'pnpm'
           cache-dependency-path: '**/pnpm-lock.yaml'
 
-      # ← Add this
-      - name: Install pnpm
-        run: npm install -g pnpm
-
+      # 3) Now you can run pnpm commands normally
       - name: Install dependencies
         run: pnpm install
 

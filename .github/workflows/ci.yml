@@ -3,28 +3,32 @@ name: CI
 # Workflow to verify Shopify app build and deployment
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 env:
-  NODE_ENV: test
+  NODE_ENV: production
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
   SHOPIFY_API_KEY: ${{ secrets.SHOPIFY_API_KEY }}
   SHOPIFY_API_SECRET: ${{ secrets.SHOPIFY_API_SECRET }}
   SHOPIFY_APP_URL: ${{ secrets.SHOPIFY_APP_URL }}
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-    - name: Setup Node.js 20
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '20.10.0'
         cache: 'npm'
 
     - name: Install dependencies
@@ -32,24 +36,9 @@ jobs:
 
     - name: Generate Prisma Client
       run: npx prisma generate
-      env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     - name: Run database migrations
-      if: success()
       run: npx prisma migrate deploy
-      env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
-
-    - name: Type check
-      if: success()
-      run: npm run typecheck || npm run tsc || echo "Skipping type check"
 
     - name: Build
-      if: success()
-      run: npm run build
-      env:
-        NODE_ENV: production
-        SHOPIFY_API_KEY: ${{ secrets.SHOPIFY_API_KEY }}
-        SHOPIFY_API_SECRET: ${{ secrets.SHOPIFY_API_SECRET }}
-        SHOPIFY_APP_URL: ${{ secrets.SHOPIFY_APP_URL }} 
+      run: npm run build 

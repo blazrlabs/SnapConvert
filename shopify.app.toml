@@ -3,7 +3,7 @@
 client_id = "b71344c0cfcb41809d268ef9a06a431d"
 name = "SnapConvert AI"
 handle = "snapconvert-ai"
-application_url = "https://detection-realistic-touring-pepper.trycloudflare.com"
+application_url = "https://carolina-concerns-kelly-continues.trycloudflare.com"
 embedded = true
 
 [build]
@@ -27,9 +27,9 @@ scopes = "read_products,write_products,read_content,read_themes,write_script_tag
 
 [auth]
 redirect_urls = [
-  "https://detection-realistic-touring-pepper.trycloudflare.com/auth/callback",
-  "https://detection-realistic-touring-pepper.trycloudflare.com/auth/shopify/callback",
-  "https://detection-realistic-touring-pepper.trycloudflare.com/api/auth/callback"
+  "https://carolina-concerns-kelly-continues.trycloudflare.com/auth/callback",
+  "https://carolina-concerns-kelly-continues.trycloudflare.com/auth/shopify/callback",
+  "https://carolina-concerns-kelly-continues.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]

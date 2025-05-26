@@ -6,12 +6,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: 'pnpm'
-      - run: pnpm install
-      - run: pnpm test
-      #- run: prisma migrate deploy
+          cache-dependency-path: '**/pnpm-lock.yaml'
+
+      # ← Add this
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run tests
+        run: pnpm test
+
+      #- name: Run migrations  
+      #  run: prisma migrate deploy  
       #  env:
       #    DATABASE_URL: ${{ secrets.DATABASE_URL }}

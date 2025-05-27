@@ -3,7 +3,7 @@
 client_id = "b71344c0cfcb41809d268ef9a06a431d"
 name = "SnapConvert AI"
 handle = "snapconvert-ai"
-application_url = "https://carolina-concerns-kelly-continues.trycloudflare.com"
+application_url = "https://zoning-established-bd-floating.trycloudflare.com"
 embedded = true
 
 [build]
@@ -21,15 +21,19 @@ api_version = "2025-04"
   topics = [ "app/scopes_update" ]
   uri = "/webhooks/app/scopes_update"
 
+  [[webhooks.subscriptions]]
+  topics = [ "products/update" ]
+  uri = "/webhooks"
+
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
 scopes = "read_products,write_products,read_content,read_themes,write_script_tags"
 
 [auth]
 redirect_urls = [
-  "https://carolina-concerns-kelly-continues.trycloudflare.com/auth/callback",
-  "https://carolina-concerns-kelly-continues.trycloudflare.com/auth/shopify/callback",
-  "https://carolina-concerns-kelly-continues.trycloudflare.com/api/auth/callback"
+  "https://zoning-established-bd-floating.trycloudflare.com/auth/callback",
+  "https://zoning-established-bd-floating.trycloudflare.com/auth/shopify/callback",
+  "https://zoning-established-bd-floating.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]

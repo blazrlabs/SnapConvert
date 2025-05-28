@@ -3,7 +3,7 @@
 client_id = "b71344c0cfcb41809d268ef9a06a431d"
 name = "SnapConvert AI"
 handle = "snapconvert-ai"
-application_url = "https://zoning-established-bd-floating.trycloudflare.com"
+application_url = "https://allan-martin-consists-presence.trycloudflare.com"
 embedded = true
 
 [build]
@@ -31,9 +31,9 @@ scopes = "read_products,write_products,read_content,read_themes,write_script_tag
 
 [auth]
 redirect_urls = [
-  "https://zoning-established-bd-floating.trycloudflare.com/auth/callback",
-  "https://zoning-established-bd-floating.trycloudflare.com/auth/shopify/callback",
-  "https://zoning-established-bd-floating.trycloudflare.com/api/auth/callback"
+  "https://allan-martin-consists-presence.trycloudflare.com/auth/callback",
+  "https://allan-martin-consists-presence.trycloudflare.com/auth/shopify/callback",
+  "https://allan-martin-consists-presence.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]
